@@ -178,9 +178,30 @@ class exBertEmbeddings(nn.Module):
 
         if inputs_embeds is None:
             inputs_embeds = self.word_embeddings(input_ids)
-        token_type_embeddings = self.token_type_embeddings(token_type_ids)
 
-        embeddings = inputs_embeds + token_type_embeddings
+        # copied from https://github.com/cgmhaicenter/exBERT/blob/master/exBERT/modeling.py#L261
+        if hasattr(self, 'word_embeddings_ADD'):
+            input_ids_new = input_ids.clone()
+            input_ids_new[input_ids <= (self.config.vocab_size - 1)] = 0
+            input_ids_new[input_ids > (self.config.vocab_size - 1)] = input_ids_new[input_ids > (
+                        self.config.vocab_size - 1)] - self.config.vocab_size
+            input_ids_old = input_ids.clone()
+            input_ids_old[input_ids > (self.config.vocab_size - 1)] = 0
+            words_embeddings = self.word_embeddings(input_ids_old.long())
+            words_embeddings.view(-1, self.config.hidden_size)[(input_ids == 0).reshape(-1)] = 0
+            words_embeddings_ADD = self.word_embeddings_ADD(input_ids_new.long())
+            words_embeddings_ADD.view(-1, self.config.hidden_size)[(input_ids == 0).reshape(-1)] = 0
+            words_embeddings = words_embeddings + words_embeddings_ADD
+        else:
+            words_embeddings = self.word_embeddings(input_ids)
+        ######################
+
+        token_type_embeddings = self.token_type_embeddings(token_type_ids)
+        # Added
+        token_type_embeddings.view(-1, self.config.hidden_size)[(token_type_ids == 0).reshape(-1)] = 0
+
+        # embeddings = inputs_embeds + token_type_embeddings
+        embeddings = words_embeddings + token_type_embeddings
         if self.position_embedding_type == "absolute":
             position_embeddings = self.position_embeddings(position_ids)
             embeddings += position_embeddings
