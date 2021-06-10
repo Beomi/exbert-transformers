@@ -32,12 +32,29 @@ limitations under the License.
 
 ## How to use
 
-```
+### Pretrain exBERT
+
+```sh
 git clone https://github.com/Beomi/exbert-transformers
 pip install -e ".[dev]" && pip install datasets
 cd examples/pytorch/language-modeling/
 ./exbert_pretrain.sh
 ```
+
+### Finetune
+
+```sh
+git clone https://github.com/Beomi/exbert-transformers
+pip install -e ".[dev]"
+```
+
+```python
+from transformers import exBertModel, exBertTokenizer
+
+model = exBertModel.from_pretrained(...)
+tokenizer = exBertTokenizer.from_pretrained(...)
+```
+
 
 ## Vocab update
 
