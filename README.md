@@ -21,6 +21,15 @@ limitations under the License.
 - Repo: https://github.com/cgmhaicenter/exBERT
 - Paper: https://www.aclweb.org/anthology/2020.findings-emnlp.129/
 
+## Updated for Transformers 🤗
+
+- PyTorch 1.8.1 ✅
+- Huggingface Trainer ✅
+- AutoModel, AutoTokenizer ✅
+- DeepSpeed Pretrain with `run_mlm.py` ✅
+- GPU ✅ (TPU test in progress)
+- Fine tune available (https://github.com/Beomi/KcBERT-finetune, In progress)
+
 ## How to use
 
 ```
