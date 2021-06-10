@@ -43,10 +43,14 @@ cd examples/pytorch/language-modeling/
 
 ### Finetune
 
+**Install exbert-transformers**
+
 ```sh
 git clone https://github.com/Beomi/exbert-transformers
 pip install -e ".[dev]"
 ```
+
+**Load**
 
 ```python
 from transformers import exBertModel, exBertTokenizer
@@ -54,6 +58,17 @@ from transformers import exBertModel, exBertTokenizer
 model = exBertModel.from_pretrained(...)
 tokenizer = exBertTokenizer.from_pretrained(...)
 ```
+
+**Trained on PAWS**
+
+```python
+from transformers import exBertModel, exBertTokenizer
+
+model = exBertModel.from_pretrained('beomi/exKcBERT-paws')
+tokenizer = exBertTokenizer.from_pretrained('beomi/exKcBERT-paws')
+```
+
+> Note) The `base_model` of Finetuned model config should be `""`(blank)
 
 
 ## Vocab update
