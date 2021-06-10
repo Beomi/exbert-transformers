@@ -38,6 +38,7 @@ limitations under the License.
 
 ```sh
 git clone https://github.com/Beomi/exbert-transformers
+cd exbert-transformers
 pip install -e ".[dev]" && pip install datasets
 cd examples/pytorch/language-modeling/
 ./exbert_pretrain.sh
