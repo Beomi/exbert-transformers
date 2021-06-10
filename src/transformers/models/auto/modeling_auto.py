@@ -23,7 +23,6 @@ from ...utils import logging
 # Add modeling imports here
 from ..exbert.modeling_exbert import (
     exBertForMaskedLM,
-    exBertForCausalLM,
     exBertForMultipleChoice,
     exBertForQuestionAnswering,
     exBertForSequenceClassification,
@@ -529,7 +528,6 @@ MODEL_WITH_LM_HEAD_MAPPING = OrderedDict(
 MODEL_FOR_CAUSAL_LM_MAPPING = OrderedDict(
     [
         # Model for Causal LM mapping
-        (exBertConfig, exBertForCausalLM),
         (RoFormerConfig, RoFormerForCausalLM),
         (BigBirdPegasusConfig, BigBirdPegasusForCausalLM),
         (GPTNeoConfig, GPTNeoForCausalLM),
@@ -572,7 +570,7 @@ MODEL_FOR_IMAGE_CLASSIFICATION_MAPPING = OrderedDict(
 MODEL_FOR_MASKED_LM_MAPPING = OrderedDict(
     [
         # Model for Masked LM mapping
-(exBertConfig, exBertForMaskedLM),
+        (exBertConfig, exBertForMaskedLM),
         (RoFormerConfig, RoFormerForMaskedLM),
         (BigBirdConfig, BigBirdForMaskedLM),
         (Wav2Vec2Config, Wav2Vec2ForMaskedLM),
@@ -748,7 +746,7 @@ MODEL_FOR_TOKEN_CLASSIFICATION_MAPPING = OrderedDict(
 MODEL_FOR_MULTIPLE_CHOICE_MAPPING = OrderedDict(
     [
         # Model for Multiple Choice mapping
-(exBertConfig, exBertForMultipleChoice),
+        (exBertConfig, exBertForMultipleChoice),
         (RoFormerConfig, RoFormerForMultipleChoice),
         (BigBirdConfig, BigBirdForMultipleChoice),
         (ConvBertConfig, ConvBertForMultipleChoice),

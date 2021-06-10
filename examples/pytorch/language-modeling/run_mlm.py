@@ -34,9 +34,10 @@ import transformers
 from transformers import (
     CONFIG_MAPPING,
     MODEL_FOR_MASKED_LM_MAPPING,
-    AutoConfig,
-    AutoModelForMaskedLM,
-    AutoTokenizer,
+    exBertConfig,
+    exBertForMaskedLM,
+    BertTokenizer,
+    exBertTokenizer,
     DataCollatorForLanguageModeling,
     HfArgumentParser,
     Trainer,
@@ -277,9 +278,9 @@ def main():
         "use_auth_token": True if model_args.use_auth_token else None,
     }
     if model_args.config_name:
-        config = AutoConfig.from_pretrained(model_args.config_name, **config_kwargs)
+        config = exBertConfig.from_pretrained(model_args.config_name, **config_kwargs)
     elif model_args.model_name_or_path:
-        config = AutoConfig.from_pretrained(model_args.model_name_or_path, **config_kwargs)
+        config = exBertConfig.from_pretrained(model_args.model_name_or_path, **config_kwargs)
     else:
         config = CONFIG_MAPPING[model_args.model_type]()
         logger.warning("You are instantiating a new config instance from scratch.")
@@ -291,9 +292,9 @@ def main():
         "use_auth_token": True if model_args.use_auth_token else None,
     }
     if model_args.tokenizer_name:
-        tokenizer = AutoTokenizer.from_pretrained(model_args.tokenizer_name, **tokenizer_kwargs)
+        tokenizer = BertTokenizer.from_pretrained(model_args.tokenizer_name, **tokenizer_kwargs)
     elif model_args.model_name_or_path:
-        tokenizer = AutoTokenizer.from_pretrained(model_args.model_name_or_path, **tokenizer_kwargs)
+        tokenizer = BertTokenizer.from_pretrained(model_args.model_name_or_path, **tokenizer_kwargs)
     else:
         raise ValueError(
             "You are instantiating a new tokenizer from scratch. This is not supported by this script."
@@ -301,7 +302,7 @@ def main():
         )
 
     if model_args.model_name_or_path:
-        model = AutoModelForMaskedLM.from_pretrained(
+        model = exBertForMaskedLM.from_pretrained(
             model_args.model_name_or_path,
             from_tf=bool(".ckpt" in model_args.model_name_or_path),
             config=config,
@@ -311,7 +312,7 @@ def main():
         )
     else:
         logger.info("Training new model from scratch")
-        model = AutoModelForMaskedLM.from_config(config)
+        model = exBertForMaskedLM(config)
 
     model.resize_token_embeddings(len(tokenizer))
 
