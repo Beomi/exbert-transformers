@@ -22,6 +22,7 @@
     "intermediate_size": 3072,
     "ex_intermediate_size": 1024,
     "base_model": "beomi/kcbert-base",
+    "freeze_base_model": true,
     "architectures": [
         "exBertForMaskedLM"
     ],

@@ -101,38 +101,34 @@ class exBertConfig(PretrainedConfig):
     model_type = "exbert"
 
     def __init__(
-            self,
-            vocab_size=30000,
-            ex_vocab_size=20135,
-            hidden_size=768,
-            ex_hidden_size=252,
-            num_hidden_layers=12,
-            ex_num_hidden_layers=12,
-            num_attention_heads=12,
-            ex_num_attention_heads=12,
-            intermediate_size=3072,
-            ex_intermediate_size=1024,
-            hidden_act="gelu",
-            hidden_dropout_prob=0.1,
-            attention_probs_dropout_prob=0.1,
-            max_position_embeddings=300,
-            type_vocab_size=2,
-            initializer_range=0.02,
-            layer_norm_eps=1e-12,
-            use_cache=True,
-            is_encoder_decoder=False,
-            pad_token_id=1,
-            bos_token_id=0,
-            eos_token_id=2,
-            base_model='beomi/kcbert-base',
-            **kwargs
+        self,
+        vocab_size=30000,
+        ex_vocab_size=20135,
+        hidden_size=768,
+        ex_hidden_size=252,
+        num_hidden_layers=12,
+        ex_num_hidden_layers=12,
+        num_attention_heads=12,
+        ex_num_attention_heads=12,
+        intermediate_size=3072,
+        ex_intermediate_size=1024,
+        hidden_act="gelu",
+        hidden_dropout_prob=0.1,
+        attention_probs_dropout_prob=0.1,
+        max_position_embeddings=300,
+        type_vocab_size=2,
+        initializer_range=0.02,
+        layer_norm_eps=1e-12,
+        use_cache=True,
+        is_encoder_decoder=False,
+        pad_token_id=1,
+        bos_token_id=0,
+        eos_token_id=2,
+        base_model="beomi/kcbert-base",
+        freeze_base_model=True,
+        **kwargs
     ):
-        super().__init__(
-            pad_token_id=pad_token_id,
-            bos_token_id=bos_token_id,
-            eos_token_id=eos_token_id,
-            **kwargs
-        )
+        super().__init__(pad_token_id=pad_token_id, bos_token_id=bos_token_id, eos_token_id=eos_token_id, **kwargs)
 
         self.vocab_size = vocab_size
         self.ex_vocab_size = ex_vocab_size
@@ -153,3 +149,4 @@ class exBertConfig(PretrainedConfig):
         self.layer_norm_eps = layer_norm_eps
         self.use_cache = use_cache
         self.base_model = base_model
+        self.freeze_base_model = freeze_base_model
